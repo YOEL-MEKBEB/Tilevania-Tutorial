@@ -6,12 +6,26 @@ public class PlayerMovement : MonoBehaviour
 {
    
     Vector2 moveInput;
-    [SerializeField] float playerSpeed = 2;
+    Vector2 upInput;
+    [SerializeField] float playerSpeed = 2f;
+    [SerializeField] float jumpSpeed = 10f;
+    [SerializeField] float climbSpeed = 2f;
+    //[SerializeField] Tilemap climbMap;
 
     Rigidbody2D player;
+    CapsuleCollider2D collider2D;
+    Animator animator;
+
+    int layerMask;
+
+    bool playerHasHorizontalSpeed; // bool to check if movement is happening
+
+    bool climbing = false;
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        collider2D = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -19,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Run();
         FlipSprite();
+        ClimbLadder();
     }
 
     void OnMove(InputValue value){
@@ -26,19 +41,57 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(moveInput);
     }
 
+    void OnJump(InputValue value){
+
+        layerMask = LayerMask.GetMask("Ground");
+
+        if(value.isPressed && collider2D.IsTouchingLayers(layerMask)){
+            player.velocity += new Vector2(0f, jumpSpeed);
+        }
+    }
+
     void Run(){
         Vector2 playerVelocity = new Vector2(playerSpeed * moveInput.x, player.velocity.y); // gets only the x velocity of moveInput
         player.velocity =  playerVelocity;
+
+        playerHasHorizontalSpeed = Mathf.Abs(player.velocity.x) > Mathf.Epsilon;
+        // if(playerHasHorizontalSpeed){
+        //     animator.SetBool("isRunning", true);
+        // }
+        // else{
+        //     animator.SetBool("isRunning", false);
+        // }
+        animator.SetBool("isRunning", playerHasHorizontalSpeed); // same effect as the commented code above
+    
+
     }
     
     void FlipSprite(){
         // Mathf.Sign returns 1 if positive, -1 if negative
         // Mathf.Epsilon is a really small number close to zero but not zero;
-        bool playerHasHorizontalSpeed = Mathf.Abs(player.velocity.x) > Mathf.Epsilon;
+        playerHasHorizontalSpeed = Mathf.Abs(player.velocity.x) > Mathf.Epsilon;
 
         if(playerHasHorizontalSpeed){
             transform.localScale = new Vector2(Mathf.Sign(player.velocity.x), 1f);
         }
         
     }
+
+
+    void ClimbLadder(){
+
+        layerMask = LayerMask.GetMask("Ladder");
+
+        if(collider2D.IsTouchingLayers(layerMask)){
+            climbing = true;
+        }else{
+            climbing = false;
+        }
+        if(climbing){
+            Vector2 climbVelocity = new Vector2(player.velocity.x, climbSpeed * moveInput.y);
+            player.velocity =  climbVelocity;
+        }
+    }
+
+   
 }

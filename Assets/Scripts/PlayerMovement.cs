@@ -16,16 +16,18 @@ public class PlayerMovement : MonoBehaviour
     CapsuleCollider2D collider2D;
     Animator animator;
 
+    float gravityAtStart;
+
     int layerMask;
 
     bool playerHasHorizontalSpeed; // bool to check if movement is happening
 
-    bool climbing = false;
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         collider2D = GetComponent<CapsuleCollider2D>();
+        gravityAtStart = player.gravityScale;
     }
 
     // Update is called once per frame
@@ -82,15 +84,18 @@ public class PlayerMovement : MonoBehaviour
 
         layerMask = LayerMask.GetMask("Ladder");
 
-        if(collider2D.IsTouchingLayers(layerMask)){
-            climbing = true;
-        }else{
-            climbing = false;
+        if(!collider2D.IsTouchingLayers(layerMask)){
+            player.gravityScale = gravityAtStart;
+            animator.SetBool("isClimbing", false);
+            return;
         }
-        if(climbing){
-            Vector2 climbVelocity = new Vector2(player.velocity.x, climbSpeed * moveInput.y);
-            player.velocity =  climbVelocity;
-        }
+
+        player.gravityScale = 0f;
+        Vector2 climbVelocity = new Vector2(player.velocity.x, climbSpeed * moveInput.y);
+        player.velocity =  climbVelocity;
+
+        bool playerHasVerticalSpeed = Mathf.Abs(player.velocity.y) > Mathf.Epsilon;
+        animator.SetBool("isClimbing", playerHasVerticalSpeed);
     }
 
    

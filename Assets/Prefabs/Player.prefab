@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 273253369670698095}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.191, y: -0.163, z: 0}
+  m_LocalPosition: {x: 0.196, y: -0.092, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -250,6 +250,8 @@ MonoBehaviour:
   playerSpeed: 7
   jumpSpeed: 25
   climbSpeed: 4
+  bullet: {fileID: 0}
+  gun: {fileID: 0}
 --- !u!61 &16033692150983685
 BoxCollider2D:
   m_ObjectHideFlags: 0

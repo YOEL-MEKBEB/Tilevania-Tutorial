@@ -113,8 +113,9 @@ public class PlayerMovement : MonoBehaviour
     // }
 
     void Die(){
-        layerMask = LayerMask.GetMask("Enemy");
-        if(collider2D.IsTouchingLayers(layerMask)){
+        layerMask = LayerMask.GetMask("Enemy", "Hazards");
+        
+        if(collider2D.IsTouchingLayers(layerMask) || boxCollider2D.IsTouchingLayers(layerMask)){
             Debug.Log("alive is false");
             isAlive = false;
             player.velocity += new Vector2(0f, jumpSpeed);

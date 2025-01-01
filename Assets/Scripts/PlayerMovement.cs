@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     int layerMask;
 
     bool playerHasHorizontalSpeed; // bool to check if movement is happening
+    bool isAlive = true;
 
     void Start()
     {
@@ -35,9 +36,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Run();
-        FlipSprite();
-        ClimbLadder();
+        if(isAlive){
+            Run();
+            FlipSprite();
+            ClimbLadder();
+            Die();
+        }
+       
     }
 
     void OnMove(InputValue value){
@@ -47,11 +52,14 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump(InputValue value){
 
-        layerMask = LayerMask.GetMask("Ground");
+        if(isAlive){
+            layerMask = LayerMask.GetMask("Ground");
 
-        if(value.isPressed && boxCollider2D.IsTouchingLayers(layerMask)){
-            player.velocity += new Vector2(0f, jumpSpeed);
+            if(value.isPressed && boxCollider2D.IsTouchingLayers(layerMask)){
+                player.velocity += new Vector2(0f, jumpSpeed);
+            }
         }
+
     }
 
     void Run(){
@@ -100,5 +108,20 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("isClimbing", playerHasVerticalSpeed);
     }
 
+    // void OnCollisionEnter2D(Collision2D other){
+    //     if(other.)
+    // }
+
+    void Die(){
+        layerMask = LayerMask.GetMask("Enemy");
+        if(collider2D.IsTouchingLayers(layerMask)){
+            Debug.Log("alive is false");
+            isAlive = false;
+            player.velocity += new Vector2(0f, jumpSpeed);
+            animator.SetBool("isRunning", false);
+            animator.SetTrigger("Dying");
+            
+        }
+    }
    
 }

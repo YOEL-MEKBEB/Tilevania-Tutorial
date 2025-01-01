@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float playerSpeed = 2f;
     [SerializeField] float jumpSpeed = 10f;
     [SerializeField] float climbSpeed = 2f;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform gun;
+
     //[SerializeField] Tilemap climbMap;
 
     Rigidbody2D player;
@@ -62,6 +65,12 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    void OnFire(InputValue value){
+        if(!isAlive){return;}
+        Instantiate(bullet, gun.position, transform.rotation);
+    }
+
+
     void Run(){
         Vector2 playerVelocity = new Vector2(playerSpeed * moveInput.x, player.velocity.y); // gets only the x velocity of moveInput
         player.velocity =  playerVelocity;
@@ -108,10 +117,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("isClimbing", playerHasVerticalSpeed);
     }
 
-    // void OnCollisionEnter2D(Collision2D other){
-    //     if(other.)
-    // }
-
+   
     void Die(){
         layerMask = LayerMask.GetMask("Enemy", "Hazards");
         

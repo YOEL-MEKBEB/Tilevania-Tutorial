@@ -1026,6 +1026,8 @@ MonoBehaviour:
     m_ParentHash: 756556552
   - m_Hash: 766664481
     m_ParentHash: 756556552
+  - m_Hash: 1644927660
+    m_ParentHash: 756556552
 --- !u!1 &928160798
 GameObject:
   m_ObjectHideFlags: 0
@@ -11866,6 +11868,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!4 &1448836317 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2806745430464912359, guid: 09157e5e0cd8e498db80606ae5af6f43, type: 3}
+  m_PrefabInstance: {fileID: 2291369824073763814}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1543759337
 GameObject:
   m_ObjectHideFlags: 3
@@ -37809,6 +37816,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4849759944115746219, guid: 09157e5e0cd8e498db80606ae5af6f43, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 1448836317}
+    - target: {fileID: 4849759944115746219, guid: 09157e5e0cd8e498db80606ae5af6f43, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 7430376648838796066, guid: c4ebee01957d347b1ac62e776e2d5011, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

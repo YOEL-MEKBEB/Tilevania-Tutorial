@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody2D player;
     CapsuleCollider2D collider2D;
+    BoxCollider2D boxCollider2D;
     Animator animator;
 
     float gravityAtStart;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         collider2D = GetComponent<CapsuleCollider2D>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
         gravityAtStart = player.gravityScale;
     }
 
@@ -47,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
         layerMask = LayerMask.GetMask("Ground");
 
-        if(value.isPressed && collider2D.IsTouchingLayers(layerMask)){
+        if(value.isPressed && boxCollider2D.IsTouchingLayers(layerMask)){
             player.velocity += new Vector2(0f, jumpSpeed);
         }
     }

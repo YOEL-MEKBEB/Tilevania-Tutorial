@@ -22,6 +22,8 @@ public class LevelExit : MonoBehaviour
         if(nextSceneIndex == SceneManager.sceneCountInBuildSettings){
             nextSceneIndex = 0;
         }
+        FindObjectOfType<ScenePersist>().ResetScene();
         SceneManager.LoadScene(nextSceneIndex);
+        
    }
 }

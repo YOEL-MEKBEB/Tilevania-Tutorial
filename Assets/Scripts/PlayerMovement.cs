@@ -67,9 +67,16 @@ public class PlayerMovement : MonoBehaviour
 
     void OnFire(InputValue value){
         if(!isAlive){return;}
+        animator.SetBool("isShooting", true);
         Instantiate(bullet, gun.position, transform.rotation);
+        StartCoroutine(Shoot());
     }
 
+    IEnumerator Shoot(){
+        yield return new WaitForSecondsRealtime(0.5f);
+        animator.SetBool("isShooting", false);
+        
+    }
 
     void Run(){
         Vector2 playerVelocity = new Vector2(playerSpeed * moveInput.x, player.velocity.y); // gets only the x velocity of moveInput

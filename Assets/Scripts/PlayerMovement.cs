@@ -127,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
             player.velocity += new Vector2(0f, jumpSpeed);
             animator.SetBool("isRunning", false);
             animator.SetTrigger("Dying");
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();
             
         }
     }
